@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
 
 class ResetPasswordController extends Controller
 {
@@ -25,5 +26,17 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/reset/success';
+
+    
+    public function resetSuccess(){
+        $title = 'You are reset password success';
+        $button = [
+            'route' => 'login',      
+            'title' => "Login",
+            'modify' => 'success'
+        ];
+
+        return view('auth.auth-success', compact('title', 'button'));
+    }
 }

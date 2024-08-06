@@ -7,6 +7,9 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\FacadesStorage;
 
 class PostController extends Controller
 {
@@ -56,7 +59,7 @@ class PostController extends Controller
         $dataPost['is_banner'] ??= 0;
 
         if ($request->hasFile('thumbnail')) {
-            $dataPost['thumbnail'] = \Storage::put(self::PATH_UPLOAD, $request->file('thumbnail'));
+            $dataPost['thumbnail'] = Storage::put(self::PATH_UPLOAD, $request->file('thumbnail'));
         }
 
         $dataTags = $request->tags;
@@ -73,8 +76,8 @@ class PostController extends Controller
                 ->with('success', 'Thao tác thành công!');
         } catch (\Exception $exception) {
             \DB::rollBack();
-            if (\Storage::exists($dataPost['thumbnail'])) {
-                \Storage::delete($dataPost['thumbnail']);
+            if (Storage::exists($dataPost['thumbnail'])) {
+                Storage::delete($dataPost['thumbnail']);
             }
             return back()->with('error', $exception->getMessage());
         }
@@ -86,7 +89,9 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+
+        return view(self::PATH_VIEW . __FUNCTION__, compact('post'));
     }
 
     /**
@@ -106,7 +111,7 @@ class PostController extends Controller
     public function update(Request $request, string $id)
     {
         $post = Post::findOrFail($id);
-        $currentThumbnail = $post->thumnail;
+        $currentThumbnail = $post->thumbnail;
 
         $request->validate([
             'title' => 'required',
@@ -126,8 +131,12 @@ class PostController extends Controller
         $dataPost['is_banner'] ??= 0;
 
         if ($request->hasFile('thumbnail')) {
-            $dataPost['thumbnail'] = \Storage::put(self::PATH_UPLOAD, $request->file('thumbnail'));
-            
+            $dataPost['thumbnail'] = Storage::put(self::PATH_UPLOAD, $request->file('thumbnail'));
+
+            if (!empty($currentThumbnail) && Storage::exists($currentThumbnail)) {
+
+                Storage::delete($currentThumbnail);
+            }
         }
 
         $dataTags = $request->tags;
@@ -138,13 +147,13 @@ class PostController extends Controller
             $post->update($dataPost);
             $post->tags()->sync($dataTags);
             \DB::commit();
-            
+
             return back()
                 ->with('success', 'Thao tác thành công!');
         } catch (\Exception $exception) {
             \DB::rollBack();
-            if (\Storage::exists($dataPost['thumbnail'])) {
-                \Storage::delete($dataPost['thumbnail']);
+            if (Storage::exists($dataPost['thumbnail'])) {
+                Storage::delete($dataPost['thumbnail']);
             }
             return back()->with('error', $exception->getMessage());
         }
@@ -155,6 +164,23 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $post = Post::findOrFail($id);
+
+            DB::beginTransaction();
+
+            $post->comments()->delete();
+            $post->tags()->sync([]);
+            $post->delete();
+
+            DB::commit();
+
+            return back()->with('success', 'You delete success');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return back()->with('error', 'You delete error');
+        }
+
     }
 }

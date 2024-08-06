@@ -2,6 +2,7 @@
 
 @section('banner')
     @php
+    
         $bannerRight = $data[0][0];
         $bannerLeftTop = array_splice($data[0], 1, 2);
         $bannerLeftBottom = $data[0][1];

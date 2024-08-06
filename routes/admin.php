@@ -2,10 +2,12 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')
     ->as('admin.')
+    ->middleware(['isAdmin', 'verified'])
     ->group(function () {
 
         Route::get('/', function () {
@@ -50,6 +52,19 @@ Route::prefix('admin')
             Route::get('/{id}/edit', [TagController::class, 'edit'])->name('edit');
             Route::put('/{id}', [TagController::class, 'update'])->name('update');
             Route::delete('/{id}', [TagController::class, 'destroy'])->name('destroy');
+        });
+
+        // users
+        Route::prefix('users')
+            ->as('users.')
+            ->group(function () {
+            Route::get('/', [UserController::class, 'index'])->name('index');
+            Route::get('/create', [UserController::class, 'create'])->name('create');
+            Route::post('/', [UserController::class, 'store'])->name('store');
+            Route::get('/{id}', [UserController::class, 'show'])->name('show');
+            Route::get('/{id}/edit', [UserController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [UserController::class, 'update'])->name('update');
+            Route::delete('/{id}', [UserController::class, 'destroy'])->name('destroy');
         });
 
     });

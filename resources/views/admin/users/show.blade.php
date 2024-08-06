@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Show detail post: {{ $post->name }}
+    Show detail user: {{ $user->name }}
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Detail post name: {{ $post->name }} </h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Detail user name: {{ $user->name }} </h4>
                 </div><!-- end card header -->
                 <div class="card-body">
 
@@ -19,23 +19,15 @@
                             <th>Value</th>
                         </thead>
                         <tbody>
-                            @foreach ($post->toArray() as $col => $value)
+                            @foreach ($user->toArray() as $col => $value)
                                 <tr>
                                     <td>{{ $col }}</td>
 
                                     <td>
                                         @php
-                                            if ($col == 'content') {
-                                                echo '<div class="overflow-scroll" style="height: 400px;;">' .
-                                                    $value .
-                                                    '</div>';
-                                            } elseif ($col == 'thumbnail') {
+                                            if ($col == 'avata') {
                                                 echo '<img src="' . \Storage::url($value) . '" width="100px">';
-                                            } elseif (\Str::contains($col, 'is_')) {
-                                                echo $value
-                                                    ? '<span class="badge bg-primary">YES</span>'
-                                                    : '<span class="badge bg-danger">NO</span>';
-                                            }else {
+                                            } else {
                                                 echo $value;
                                             }
                                         @endphp
@@ -45,7 +37,7 @@
                         </tbody>
                     </table>
 
-                    <a href="{{ route('admin.posts.index') }}" class="btn btn-success">Back</a>
+                    <a href="{{ route('admin.users.index') }}" class="btn btn-success">Back</a>
                 </div>
             </div>
         </div>

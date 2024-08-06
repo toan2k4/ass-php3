@@ -106,7 +106,7 @@
             <div class="tags--widget style--1">
                 <ul class="nav">
                     @foreach ($tags as $item)
-                        <li><a href="#">{{$item->name }}</a></li>
+                        <li><a href="{{ route('posts.tag.list', $item->id)}}">{{$item->name }}</a></li>
                     @endforeach
                 </ul>
             </div>

@@ -4,23 +4,23 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>Success Message | Velzon - Admin & Dashboard Template</title>
+    <title>@yield('title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <link rel="shortcut icon" href="{{ asset('theme/admin/assets/images/favicon.ico') }}">
 
     <!-- Layout config Js -->
-    <script src="assets/js/layout.js"></script>
+    <script src="{{ asset('theme/admin/assets/js/layout.js') }}"></script>
     <!-- Bootstrap Css -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('theme/admin/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
-    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('theme/admin/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- App Css-->
-    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('theme/admin/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- custom Css-->
-    <link href="assets/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('theme/admin/assets/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -46,7 +46,7 @@
                         <div class="text-center mt-sm-5 mb-4 text-white-50">
                             <div>
                                 <a href="index.html" class="d-inline-block auth-logo">
-                                    <img src="assets/images/logo-light.png" alt="" height="20">
+                                    <img src="{{ asset('theme/admin/assets/images/logo-light.png') }}" alt="" height="20">
                                 </a>
                             </div>
                             <p class="mt-3 fs-15 fw-medium">Premium Admin & Dashboard Template</p>
@@ -55,31 +55,7 @@
                 </div>
                 <!-- end row -->
 
-                <div class="row justify-content-center">
-                    <div class="col-md-8 col-lg-6 col-xl-5">
-                        <div class="card mt-4">
-                            <div class="card-body p-4 text-center">
-                                <div class="avatar-lg mx-auto mt-2">
-                                    <div class="avatar-title bg-light text-success display-3 rounded-circle">
-                                        <i class="ri-checkbox-circle-fill"></i>
-                                    </div>
-                                </div>
-                                <div class="mt-4 pt-2">
-                                    <h4>Well done !</h4>
-                                    <p class="text-muted mx-4">Aww yeah, you successfully read this important message.</p>
-                                    <div class="mt-4">
-
-                                        <a href="auth-signin-basic.html" class="btn btn-success ">Back to Dashboard</a>
-                                    
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- end card body -->
-                        </div>
-                        <!-- end card -->
-
-                    </div>
-                </div>
+                @yield('content')
                 <!-- end row -->
             </div>
             <!-- end container -->
@@ -105,19 +81,19 @@
     <!-- end auth-page-wrapper -->
 
     <!-- JAVASCRIPT -->
-    <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/libs/simplebar/simplebar.min.js"></script>
-    <script src="assets/libs/node-waves/waves.min.js"></script>
-    <script src="assets/libs/feather-icons/feather.min.js"></script>
-    <script src="assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
-    <script src="assets/js/plugins.js"></script>
+    <script>
+        const PATH_ROOT = '{{ asset('theme/admin') }}';
+    </script>
+    
+    <script src="{{ asset('theme/admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('theme/admin/assets/libs/simplebar/simplebar.min.js') }}"></script>
+    <script src="{{ asset('theme/admin/assets/libs/node-waves/waves.min.js') }}"></script>
+    <script src="{{ asset('theme/admin/assets/libs/feather-icons/feather.min.js') }}"></script>
+    <script src="{{ asset('theme/admin/assets/js/pages/plugins/lord-icon-2.1.0.js') }}"></script>
+    <script src="{{ asset('theme/admin/assets/js/plugins.js') }}"></script>
 
-    <!-- particles js -->
-    <script src="assets/libs/particles.js/particles.js"></script>
-    <!-- particles app js -->
-    <script src="assets/js/pages/particles.app.js"></script>
-    <!-- password-addon init -->
-    <script src="assets/js/pages/password-addon.init.js"></script>
+    @yield('script')
+    
 </body>
 
 </html>

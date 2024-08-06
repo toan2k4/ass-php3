@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    List posts
+    List users
 @endsection
 
 @section('style')
@@ -18,8 +18,8 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="card-title mb-0">List posts </h5>
-                    <a href="{{ route('admin.posts.create') }}" class="btn btn-primary">Add</a>
+                    <h5 class="card-title mb-0">List users </h5>
+                    <a href="{{ route('admin.users.create') }}" class="btn btn-primary">Add</a>
                 </div>
                 @if (session('success'))
                     <div class="alert alert-success">
@@ -37,28 +37,26 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Title</th>
-                                <th>Name Category</th>
-                                <th>Thumbnail</th>
-                                <th>Views</th>
-                                <th>Created at</th>
-                                <th>Updated at</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Avata</th>
+                                <th>Email verified at</th>
+                                <th>Type</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($posts as $item)
+                            @foreach ($users as $item)
                                 <tr>
 
                                     <td>{{ $item->id }}</td>
-                                    <td class="w-50">{{ $item->title }}</td>
-                                    <td>{{ $item->Category->name }}</td>
+                                    <td class="w-50">{{ $item->name }}</td>
+                                    <td>{{ $item->email }}</td>
                                     <td>
-                                        <img src="{{ \Storage::url($item->thumbnail) }}" width="100px">
+                                        <img src="{{ \Storage::url($item->avata) }}" width="100px">
                                     </td>
-                                    <td>{{ $item->views }}</td>
-                                    <td>{{ $item->created_at }}</td>
-                                    <td>{{ $item->updated_at }}</td>
+                                    <td>{{ $item->email_verified_at }}</td>
+                                    <td>{{ $item->type }}</td>
                                     
                                     <td>
                                         <div class="dropdown d-inline-block">
@@ -67,16 +65,16 @@
                                                 <i class="ri-more-fill align-middle"></i>
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-end">
-                                                <li><a href="{{ route('admin.posts.show', $item->id) }}"
+                                                <li><a href="{{ route('admin.users.show', $item->id) }}"
                                                         class="dropdown-item"><i
                                                             class="ri-eye-fill align-bottom me-2 text-muted"></i>
                                                         View</a></li>
-                                                <li><a href="{{ route('admin.posts.edit', $item->id) }}"
+                                                <li><a href="{{ route('admin.users.edit', $item->id) }}"
                                                         class="dropdown-item edit-item-btn"><i
                                                             class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                         Edit</a></li>
                                                 <li>
-                                                    <form action="{{ route('admin.posts.destroy', $item->id) }}"
+                                                    <form action="{{ route('admin.users.destroy', $item->id) }}"
                                                         method="post">
                                                         @csrf
                                                         @method('DELETE')

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Post;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 
@@ -36,4 +37,6 @@ class HomeController extends Controller
         
         return view('client.home', compact('data', 'titles'));
     }
+
+   
 }
